@@ -1,28 +1,12 @@
-'use client'
-import { useEffect, useState } from "react";
+import { Form } from "@/components/Form";
+import Produtos from "@/components/Produtos";
 
 export default function Home() {
-  const [produto, setProduto] = useState<any>([]);
-
-  useEffect(() => {
-    obterProdutos();
-  }, []);
-
-  async function obterProdutos() {
-    const resp = await fetch("http://localhost:3001/produtos");
-    const produtos = await resp.json();
-    setProduto(produtos);
-  }
-
+  
   return (
-    <div>
-      {produto.map((produto: any) => (
-        <div key={produto.id}>
-          <p>{produto.nome}</p>
-          <p>{produto.descricao}</p>
-          <p>{produto.preco}</p>
-        </div>
-      ))}
+    <div className="flex flex-col justify-center items-center h-screen gap-10">
+      <Form />
+      <Produtos />
     </div>
   );
 }
