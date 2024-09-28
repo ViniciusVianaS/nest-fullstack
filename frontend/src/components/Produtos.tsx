@@ -14,11 +14,17 @@ const Produtos = () => {
     setProduto(produtos);
   }
 
+  async function obterProdutoPorId(id: number) {
+    const resp = await fetch(`http://localhost:3001/produtos/${id}`);
+    const produto = await resp.json();
+    setProduto(produto);
+  }
+
   async function excluirProdutos(id: number) {
     await fetch(`http://localhost:3001/produtos/${id}`, {
       method: "DELETE",
     });
-    await obterProdutos()
+    await obterProdutos();
   }
 
   return (
@@ -39,10 +45,16 @@ const Produtos = () => {
               <td className="border px-4 py-2">{produto.descricao}</td>
               <td className="border px-4 py-2">{produto.preco}</td>
               <td className="border px-4 py-2">
-                <button className="bg-blue-500 p-2 rounded duration-300 hover:bg-blue-600">
+                <button
+                  onClick={() => obterProdutoPorId(produto.id)}
+                  className="bg-blue-500 p-2 rounded duration-300 hover:bg-blue-600"
+                >
                   Editar
                 </button>
-                <button onClick={() => excluirProdutos(produto.id)} className="bg-red-500 ml-2 p-2 rounded duration-300 hover:bg-red-600">
+                <button
+                  onClick={() => excluirProdutos(produto.id)}
+                  className="bg-red-500 ml-2 p-2 rounded duration-300 hover:bg-red-600"
+                >
                   Deletar
                 </button>
               </td>

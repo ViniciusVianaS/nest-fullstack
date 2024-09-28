@@ -16,6 +16,19 @@ export const Form = () => {
     setProduto(produtos);
     setProduto({});
   }
+  
+  async function alterarProduto() {
+    const resp = await fetch(`http://localhost:3001/produtos/${produto.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(produto),
+    });
+    const produtos = await resp.json();
+    setProduto(produtos);
+    setProduto({});
+  }
 
   return (
     <div className="flex gap-5 items-end">
@@ -52,12 +65,21 @@ export const Form = () => {
         />
       </div>
       <div>
-        <button
-          onClick={criarProduto}
-          className="bg-blue-500 p-1 rounded text-white"
-        >
-          Criar produto
-        </button>
+        {produto.id ? (
+          <button
+            onClick={alterarProduto}
+            className="bg-blue-500 p-1 rounded text-white hover:bg-blue-600 duration-300"
+          >
+            Alterar produto
+          </button>
+        ) : (
+          <button
+            onClick={criarProduto}
+            className="bg-blue-500 p-1 rounded text-white hover:bg-blue-600 duration-300"
+          >
+            Criar produto
+          </button>
+        )}
       </div>
     </div>
   );
